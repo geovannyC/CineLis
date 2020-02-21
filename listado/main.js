@@ -5,13 +5,31 @@ import { Container } from 'native-base';
 import getData from '../routes/Getdata'
 import { ListItem } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
+class pedido {
+  constructor(producto){
+    this._producto = producto;
+  }
+  get producto(){
+    return this.producto
+  }
+}
+class Envio extends pedido{
+  constructor(producto,envio){
+    super(producto)
+    this._envio = envio
+  }
+  get envio(){
+    return this._envio
+  }
+}
+
 
 
 export default class Carrito extends React.Component {
 constructor(props){
   super(props);
   this.state = {
-    producto: null,
+    productos: null,
     loading: true,
     producto: null,
     envio: null
@@ -28,10 +46,12 @@ constructor(props){
 
  }
 envio=async(event)=>{
+  const envio = new Envio('producto',event)
+  
     await this.setState({
-        envio: event
+        envio: envio.envio
     })
-    
+  console.log(envio)
 }
 sendData(){
      const data = JSON.stringify({
